@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Copy to Clipboard</title>
+  <meta charset="UTF-8">
+  <script>
+    window.onload = () => {
+      const params = new URLSearchParams(window.location.search);
+      const textToCopy = params.get("text") || "harixtg-1@okhdfcbank";
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        document.getElementById("message").innerText = "Copied to clipboard:\n" + textToCopy;
+      }).catch(err => {
+        document.getElementById("message").innerText = "Copy failed: " + err;
+      });
+    };
+  </script>
+</head>
+<body style="font-family:sans-serif; text-align:center; margin-top:100px;">
+  <h2 id="message">Copyid</h2>
+</body>
+</html>
