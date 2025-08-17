@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>File Details - MadxBotz</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg-primary: #000000;
@@ -23,10 +19,9 @@
       --accent-blue: #007bff;
       --accent-red: #dc3545;
       --accent-green: #28a745;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow: 0 8px 32px rgba(0,0,0,0.3);
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
-
     [data-theme="light"] {
       --bg-primary: #f8f9fa;
       --bg-secondary: #ffffff;
@@ -34,7 +29,7 @@
       --text-primary: #212529;
       --text-secondary: #6c757d;
       --border-color: #e9ecef;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
 
     body {
@@ -47,6 +42,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      animation: fadeIn 1s ease-in-out;
     }
 
     .container {
@@ -58,6 +54,7 @@
       overflow: hidden;
       transition: var(--transition);
       position: relative;
+      animation: slideUp 0.8s ease-out;
     }
 
     .header {
@@ -83,18 +80,14 @@
       font-size: 18px;
       color: var(--text-primary);
     }
-
-    .theme-toggle:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    }
+    .theme-toggle:hover { transform: rotate(20deg) scale(1.1); }
 
     .title {
       font-size: 28px;
       font-weight: 700;
       margin-bottom: 25px;
       color: var(--text-primary);
-      animation: fadeSlide 0.8s ease-out forwards;
+      animation: textFade 1s ease-in-out;
     }
 
     .file-info {
@@ -105,29 +98,30 @@
       border: 1px solid var(--border-color);
       transition: var(--transition);
       position: relative;
-      animation: zoomIn 0.7s ease-out forwards;
+      animation: cardFade 0.8s ease forwards;
     }
-
-    .file-info:nth-child(1) { animation-delay: 0.2s; }
-    .file-info:nth-child(2) { animation-delay: 0.4s; }
-
     .file-info:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.3);
     }
+    .file-info::after {
+      content: '';
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      border-radius: 15px;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .file-info:hover::after { opacity: 1; }
 
     .info-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 8px;
-      text-transform: uppercase;
+      font-size: 14px; font-weight: 500;
+      margin-bottom: 8px; text-transform: uppercase;
       letter-spacing: 1px;
     }
-
     .info-value {
       color: var(--text-primary);
       font-size: 16px;
@@ -135,12 +129,7 @@
       line-height: 1.4;
       word-break: break-word;
     }
-
-    .file-size {
-      color: #007bff;
-      font-size: 20px;
-      font-weight: 700;
-    }
+    .file-size { color:#007bff; font-size:20px; font-weight:700; }
 
     .action-buttons {
       padding: 25px;
@@ -148,148 +137,62 @@
       flex-direction: column;
       gap: 15px;
     }
-
     .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 16px 20px;
-      border: none;
-      border-radius: 12px;
-      font-family: 'Josefin Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      text-decoration: none;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      animation: floatUp 0.8s ease-out forwards;
+      display:flex; align-items:center; justify-content:center;
+      gap:12px; padding:16px 20px;
+      border:none; border-radius:12px;
+      font-size:16px; font-weight:600;
+      cursor:pointer; transition:var(--transition);
+      text-decoration:none; color:white;
+      position:relative; overflow:hidden;
+      animation: bounceIn 1s ease;
     }
-
-    .action-buttons .btn:nth-child(1) { animation-delay: 0.6s; }
-    .action-buttons .btn:nth-child(2) { animation-delay: 0.8s; }
-    .action-buttons .btn:nth-child(3) { animation-delay: 1s; }
-
     .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      content:''; position:absolute; top:0; left:-100%;
+      width:100%; height:100%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition:left 0.5s;
     }
+    .btn:hover::before { left:100%; }
+    .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow:0 8px 25px rgba(0,0,0,0.3);}
+    .btn:active { transform: scale(0.98); }
 
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    .btn-watch {
-      background: linear-gradient(135deg, #007bff, #0056b3);
-    }
-
-    .btn-telegram {
-      background: linear-gradient(135deg, #dc3545, #c82333);
-    }
-
-    .btn-download {
-      background: linear-gradient(135deg, #28a745, #218838);
-      animation: floatUp 0.8s ease-out forwards, glowPulse 2s infinite ease-in-out;
-      animation-delay: 1s;
-    }
+    .btn-watch { background:linear-gradient(135deg, #007bff, #0056b3); }
+    .btn-telegram { background:linear-gradient(135deg, #dc3545, #c82333); }
+    .btn-download { background:linear-gradient(135deg, #28a745, #218838); }
+    .btn-download i { animation: pulse 2s infinite; }
 
     .footer {
-      text-align: center;
-      padding: 20px 25px;
-      border-top: 1px solid var(--border-color);
-      background: var(--bg-secondary);
+      text-align:center;
+      padding:20px 25px;
+      border-top:1px solid var(--border-color);
+      background:var(--bg-secondary);
+      animation: fadeIn 1.5s ease-in-out;
     }
-
     .powered-by {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 500;
+      display:flex; align-items:center; justify-content:center;
+      gap:8px; color:var(--text-secondary);
+      font-size:14px; font-weight:500;
+      animation: glow 2s infinite alternate;
     }
+    .brand { color:#dc3545; font-weight:700; }
 
-    .brand {
-      color: #dc3545;
-      font-weight: 700;
-    }
-
-    .icon-bounce {
-      animation: bounce 2s infinite;
-    }
-
-    /* Animations */
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes zoomIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes floatUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 10px rgba(255,255,255,0.1); }
-      50% { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-5px); }
-      60% { transform: translateY(-3px); }
-    }
+    /* Keyframes */
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes slideUp { from {transform:translateY(30px);opacity:0;} to {transform:translateY(0);opacity:1;} }
+    @keyframes textFade { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes cardFade { from{opacity:0;transform:scale(0.95);} to{opacity:1;transform:scale(1);} }
+    @keyframes bounceIn { 0%{transform:scale(0.5);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+    @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.2);} 100%{transform:scale(1);} }
+    @keyframes glow { from{text-shadow:0 0 5px #ff004c;} to{text-shadow:0 0 15px #ff004c;} }
 
     /* Responsive */
-    @media (max-width: 480px) {
-      .container { margin: 10px; border-radius: 15px; }
-      .title { font-size: 24px; margin-bottom: 20px; }
-      .theme-toggle { width: 40px; height: 40px; font-size: 16px; top: 15px; right: 15px; }
-      .file-info { padding: 15px; margin-bottom: 12px; }
-      .info-value { font-size: 14px; }
-      .file-size { font-size: 18px; }
-      .action-buttons { padding: 20px; gap: 12px; }
-      .btn { padding: 14px 16px; font-size: 15px; }
+    @media (max-width:480px){
+      .container{ margin:10px; border-radius:15px; }
+      .title{ font-size:24px; }
+      .btn{ font-size:15px; padding:14px 16px; }
     }
-
-    @media (min-width: 481px) and (max-width: 768px) {
-      .container { max-width: 600px; }
-    }
-
-    @media (min-width: 769px) {
-      .container { max-width: 500px; }
-      .action-buttons { flex-direction: row; flex-wrap: wrap; }
-      .btn { flex: 1; min-width: 140px; }
-    }
-
-    @media (min-width: 1200px) {
-      .container { max-width: 550px; }
-    }
+    @media (min-width:769px){ .action-buttons{ flex-direction:row; flex-wrap:wrap; } .btn{ flex:1; min-width:140px; } }
   </style>
 </head>
 <body>
@@ -301,118 +204,95 @@
       <h1 class="title">File Details</h1>
 
       <div class="file-info">
-        <div class="info-label"><i class="fas fa-file-alt"></i>FILENAME</div>
+        <div class="info-label"><i class="fas fa-file-alt"></i> FILENAME</div>
         <div class="info-value">@MadxMvz - Coolie (2025) Hindi HQ HDTS - 1080p - x264 - HQ Clean - 3GB.mkv</div>
       </div>
 
       <div class="file-info">
-        <div class="info-label"><i class="fas fa-hdd"></i>FILE SIZE</div>
+        <div class="info-label"><i class="fas fa-hdd"></i> FILE SIZE</div>
         <div class="info-value file-size">2.99GB</div>
       </div>
     </div>
 
     <div class="action-buttons">
-      <a href="#" class="btn btn-watch" onclick="handleAction('watch')"><i class="fas fa-play"></i>Watch Online</a>
-      <a href="#" class="btn btn-telegram" onclick="handleAction('telegram')"><i class="fab fa-telegram"></i>Get Telegram File</a>
-      <a href="#" class="btn btn-download" onclick="handleAction('download')"><i class="fas fa-download icon-bounce"></i>Fast Download</a>
+      <a href="#" class="btn btn-watch" onclick="handleAction('watch')">
+        <i class="fas fa-play"></i> Watch Online
+      </a>
+      <a href="#" class="btn btn-telegram" onclick="handleAction('telegram')">
+        <i class="fab fa-telegram"></i> Get Telegram File
+      </a>
+      <a href="#" class="btn btn-download" onclick="handleAction('download')">
+        <i class="fas fa-download"></i> Fast Download
+      </a>
     </div>
 
     <div class="footer">
-      <div class="powered-by"><i class="fas fa-bolt"></i>Powered by <span class="brand">MadxBotz</span></div>
+      <div class="powered-by">
+        <i class="fas fa-bolt"></i> Powered by <span class="brand">MadxBotz</span>
+      </div>
     </div>
   </div>
 
   <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const themeIcon = document.getElementById('theme-icon');
-      const currentTheme = html.getAttribute('data-theme');
-      if (currentTheme === 'light') {
-        html.setAttribute('data-theme', 'dark');
-        themeIcon.className = 'fas fa-sun';
-        localStorage.setItem('theme', 'dark');
-      } else {
-        html.setAttribute('data-theme', 'light');
-        themeIcon.className = 'fas fa-moon';
-        localStorage.setItem('theme', 'light');
+    function toggleTheme(){
+      const html=document.documentElement;
+      const themeIcon=document.getElementById('theme-icon');
+      const currentTheme=html.getAttribute('data-theme');
+      if(currentTheme==='light'){
+        html.setAttribute('data-theme','dark');
+        themeIcon.className='fas fa-sun';
+        localStorage.setItem('theme','dark');
+      }else{
+        html.setAttribute('data-theme','light');
+        themeIcon.className='fas fa-moon';
+        localStorage.setItem('theme','light');
       }
     }
-
-    function loadTheme() {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      const html = document.documentElement;
-      const themeIcon = document.getElementById('theme-icon');
-      html.setAttribute('data-theme', savedTheme);
-      themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    function loadTheme(){
+      const savedTheme=localStorage.getItem('theme')||'dark';
+      const html=document.documentElement;
+      const themeIcon=document.getElementById('theme-icon');
+      html.setAttribute('data-theme',savedTheme);
+      themeIcon.className=(savedTheme==='light')?'fas fa-moon':'fas fa-sun';
     }
-
-    function handleAction(action) {
-      const messages = {
-        watch: 'Opening video player...',
-        telegram: 'Redirecting to Telegram...',
-        download: 'Starting download...'
-      };
+    function handleAction(action){
+      const messages={ watch:'Opening video player...', telegram:'Redirecting to Telegram...', download:'Starting download...' };
       showNotification(messages[action]);
-      setTimeout(() => console.log(`${action} action triggered`), 1000);
+      setTimeout(()=>{ console.log(`${action} action triggered`); },1000);
     }
-
-    function showNotification(message) {
-      const notification = document.createElement('div');
-      notification.textContent = message;
-      notification.style.cssText = `
-        position: fixed; top: 20px; right: 20px;
-        background: var(--bg-card); color: var(--text-primary);
-        padding: 12px 20px; border-radius: 8px;
-        box-shadow: var(--shadow); z-index: 1000;
-        font-family: 'Josefin Sans', sans-serif;
-        font-weight: 500; border: 1px solid var(--border-color);
-        animation: slideIn 0.3s ease-out;
-      `;
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-      `;
+    function showNotification(message){
+      const notification=document.createElement('div');
+      notification.textContent=message;
+      notification.style.cssText=`position:fixed;top:20px;right:20px;background:var(--bg-card);color:var(--text-primary);padding:12px 20px;border-radius:8px;box-shadow:var(--shadow);z-index:1000;font-family:'Josefin Sans',sans-serif;font-weight:500;border:1px solid var(--border-color);animation:slideIn 0.3s ease-out;`;
+      const style=document.createElement('style');
+      style.textContent=`@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}`;
       document.head.appendChild(style);
       document.body.appendChild(notification);
-      setTimeout(() => {
-        notification.style.animation = 'slideIn 0.3s ease-out reverse';
-        setTimeout(() => { document.body.removeChild(notification); document.head.removeChild(style); }, 300);
-      }, 3000);
+      setTimeout(()=>{
+        notification.style.animation='slideIn 0.3s ease-out reverse';
+        setTimeout(()=>{ document.body.removeChild(notification); document.head.removeChild(style); },300);
+      },3000);
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded',function(){
       loadTheme();
-      const buttons = document.querySelectorAll('.btn');
-      buttons.forEach(btn => {
-        btn.addEventListener('mouseenter', function() {
-          this.style.transform = 'translateY(-2px) scale(1.02)';
-        });
-        btn.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateY(0) scale(1)';
-        });
-        btn.addEventListener('click', function(e) {
-          const ripple = document.createElement('span');
-          const rect = this.getBoundingClientRect();
-          const size = Math.max(rect.width, rect.height);
-          const x = e.clientX - rect.left - size / 2;
-          const y = e.clientY - rect.top - size / 2;
-          ripple.style.cssText = `
-            position: absolute; width: ${size}px; height: ${size}px;
-            left: ${x}px; top: ${y}px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%; transform: scale(0);
-            animation: ripple 0.6s ease-out; pointer-events: none;
-          `;
+      const buttons=document.querySelectorAll('.btn');
+      buttons.forEach(btn=>{
+        btn.addEventListener('click',function(e){
+          const ripple=document.createElement('span');
+          const rect=this.getBoundingClientRect();
+          const size=Math.max(rect.width,rect.height);
+          const x=e.clientX-rect.left-size/2;
+          const y=e.clientY-rect.top-size/2;
+          ripple.style.cssText=`position:absolute;width:${size}px;height:${size}px;left:${x}px;top:${y}px;background:rgba(255,255,255,0.3);border-radius:50%;transform:scale(0);animation:ripple 0.6s ease-out;pointer-events:none;`;
           this.appendChild(ripple);
-          setTimeout(() => ripple.remove(), 600);
+          setTimeout(()=>{ ripple.remove(); },600);
         });
       });
-      const rippleStyle = document.createElement('style');
-      rippleStyle.textContent = `@keyframes ripple { to { transform: scale(2); opacity: 0; } }`;
+      const rippleStyle=document.createElement('style');
+      rippleStyle.textContent=`@keyframes ripple{to{transform:scale(2);opacity:0;}}`;
       document.head.appendChild(rippleStyle);
     });
-
-    document.addEventListener('keydown', e => { if (e.key === 't' || e.key === 'T') toggleTheme(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='t'||e.key==='T'){ toggleTheme(); } });
   </script>
 </body>
 </html>
